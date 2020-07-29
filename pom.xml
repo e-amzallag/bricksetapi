@@ -4,7 +4,7 @@
 
 	<groupId>org.dajlab</groupId>
 	<artifactId>bricksetapi</artifactId>
-	<version>0.0.4-SNAPSHOT</version>
+	<version>0.0.4</version>
 	<packaging>jar</packaging>
 
 	<name>Brickset Api</name>
@@ -22,7 +22,6 @@
 	<developers>
 		<developer>
 			<name>Erik Amzallag</name>
-			<email>erik@dajlab.org</email>
 			<organization>daJLab</organization>
 			<organizationUrl>https://www.dajlab.org</organizationUrl>
 		</developer>
@@ -49,33 +48,11 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>3.1.0</version>
-				<configuration>
-					<archive>
-						<manifest>
-							<addClasspath>true</addClasspath>
-							<mainClass>org.dajlab.jtoypad.gui.JToyPadApplication</mainClass>
-							<classpathPrefix>dependency-jars/</classpathPrefix>
-						</manifest>
-					</archive>
-				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
 				<version>3.1.1</version>
-				<executions>
-					<execution>
-						<id>copy-dependencies</id>
-						<phase>package</phase>
-						<goals>
-							<goal>copy-dependencies</goal>
-						</goals>
-						<configuration>
-							<includeScope>runtime</includeScope>
-							<outputDirectory>${project.build.directory}/dependency-jars/</outputDirectory>
-						</configuration>
-					</execution>
-				</executions>
 			</plugin>
 			
 			<plugin>
@@ -151,4 +128,21 @@
 			<version>1.13</version>
 		</dependency>
 	</dependencies>
+	
+	<scm>
+		<connection>scm:git:git://github.com/e-amzallag/bricksetapi.git</connection>
+		<developerConnection>scm:git:ssh://github.com:e-amzallag/bricksetapi.git</developerConnection>
+		<url>http://github.com/e-amzallag/bricksetapi/tree/master</url>
+	</scm>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
 </project>
