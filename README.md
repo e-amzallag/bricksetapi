@@ -1,5 +1,7 @@
 # Java Brickset API
 
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.dajlab/bricksetapi/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.dajlab/bricksetapi)
+
 Java API for Brickset webservices API v3.
 
 See https://brickset.com/tools/webservices/v3 for more information about the official Brickset API
