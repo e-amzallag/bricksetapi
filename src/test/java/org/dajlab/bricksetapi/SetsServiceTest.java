@@ -38,6 +38,8 @@ import org.dajlab.bricksetapi.v3.vo.Instruction;
 import org.dajlab.bricksetapi.v3.vo.LegoCom;
 import org.dajlab.bricksetapi.v3.vo.LegoComDetails;
 import org.dajlab.bricksetapi.v3.vo.OrderByEnum;
+import org.dajlab.bricksetapi.v3.vo.Rating;
+import org.dajlab.bricksetapi.v3.vo.Reviews;
 import org.dajlab.bricksetapi.v3.vo.Set;
 import org.dajlab.bricksetapi.v3.vo.SetParameters;
 import org.dajlab.bricksetapi.v3.vo.Subtheme;
@@ -257,6 +259,37 @@ public class SetsServiceTest {
 				System.out.println(instruction.getDescription() + " - " + instruction.getUrl());
 				assertNotNull(instruction.getDescription(), "No description");
 				assertNotNull(instruction.getUrl(), "No url");
+			}
+
+		} catch (BricksetException e) {
+			fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testGetReviews() {
+
+		try {
+			SetParameters param = new SetParameters();
+			param.addSetNumber("7239-1");
+			List<Set> sets = setsService.getSets(param);
+			Set set = sets.get(0);
+
+			List<Reviews> reviews = setsService.getReviews(set.getSetId());
+			assertNotNull(reviews, "No matches");
+			assertTrue(!reviews.isEmpty(), "No matches");
+			for (Reviews review : reviews) {
+				System.out.println("Title = " + review.getTitle());
+				System.out.println("Review = " + review.getReview());
+				System.out.println("By " + review.getAuthor());
+				System.out.println("Posted " + review.getDatePosted());
+				System.out.println("Html " + review.getHtml());
+
+				Rating rating = review.getRating();
+				assertNotNull(review.getRating(), "No rating");
+				System.out.println(rating.getBuildingExperience() + "-" + rating.getOverall() + "-" + rating.getParts()
+						+ "-" + rating.getPlayability() + "-" + rating.getValueForMoney());
+
 			}
 
 		} catch (BricksetException e) {

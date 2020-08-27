@@ -36,6 +36,8 @@ public class Response {
 
 	private List<Instruction> instructions;
 
+	private List<Reviews> reviews;
+
 	private List<Theme> themes;
 
 	private List<Subtheme> subthemes;
@@ -56,7 +58,8 @@ public class Response {
 	}
 
 	/**
-	 * @param status the status to set
+	 * @param status
+	 *            the status to set
 	 */
 	public final void setStatus(StatusEnum status) {
 		this.status = status;
@@ -70,7 +73,8 @@ public class Response {
 	}
 
 	/**
-	 * @param matches the matches to set
+	 * @param matches
+	 *            the matches to set
 	 */
 	public final void setMatches(Integer matches) {
 		this.matches = matches;
@@ -84,7 +88,8 @@ public class Response {
 	}
 
 	/**
-	 * @param sets the sets to set
+	 * @param sets
+	 *            the sets to set
 	 */
 	public final void setSets(List<Set> sets) {
 		this.sets = sets;
@@ -98,7 +103,8 @@ public class Response {
 	}
 
 	/**
-	 * @param hash the hash to set
+	 * @param hash
+	 *            the hash to set
 	 */
 	public final void setHash(String hash) {
 		this.hash = hash;
@@ -112,7 +118,8 @@ public class Response {
 	}
 
 	/**
-	 * @param message the message to set
+	 * @param message
+	 *            the message to set
 	 */
 	public final void setMessage(MessageEnum message) {
 		this.message = message;
@@ -126,7 +133,8 @@ public class Response {
 	}
 
 	/**
-	 * @param additionalImages the additionalImages to set
+	 * @param additionalImages
+	 *            the additionalImages to set
 	 */
 	public final void setAdditionalImages(List<AdditionalImages> additionalImages) {
 		this.additionalImages = additionalImages;
@@ -140,10 +148,26 @@ public class Response {
 	}
 
 	/**
-	 * @param instructions the instructions to set
+	 * @param instructions
+	 *            the instructions to set
 	 */
 	public final void setInstructions(List<Instruction> instructions) {
 		this.instructions = instructions;
+	}
+
+	/**
+	 * @return the reviews
+	 */
+	public final List<Reviews> getReviews() {
+		return reviews;
+	}
+
+	/**
+	 * @param reviews
+	 *            the reviews to set
+	 */
+	public final void setReviews(List<Reviews> reviews) {
+		this.reviews = reviews;
 	}
 
 	/**
@@ -154,7 +178,8 @@ public class Response {
 	}
 
 	/**
-	 * @param themes the themes to set
+	 * @param themes
+	 *            the themes to set
 	 */
 	public final void setThemes(List<Theme> themes) {
 		this.themes = themes;
@@ -168,7 +193,8 @@ public class Response {
 	}
 
 	/**
-	 * @param subthemes the subthemes to set
+	 * @param subthemes
+	 *            the subthemes to set
 	 */
 	public final void setSubthemes(List<Subtheme> subthemes) {
 		this.subthemes = subthemes;
@@ -182,7 +208,8 @@ public class Response {
 	}
 
 	/**
-	 * @param years the years to set
+	 * @param years
+	 *            the years to set
 	 */
 	public final void setYears(List<Year> years) {
 		this.years = years;
@@ -196,7 +223,8 @@ public class Response {
 	}
 
 	/**
-	 * @param userNotes the userNotes to set
+	 * @param userNotes
+	 *            the userNotes to set
 	 */
 	public final void setUserNotes(List<UserNotes> userNotes) {
 		this.userNotes = userNotes;
@@ -210,7 +238,8 @@ public class Response {
 	}
 
 	/**
-	 * @param minifigs the minifigs to set
+	 * @param minifigs
+	 *            the minifigs to set
 	 */
 	public final void setMinifigs(List<MinifigCollection> minifigs) {
 		this.minifigs = minifigs;
@@ -224,7 +253,8 @@ public class Response {
 	}
 
 	/**
-	 * @param apiKeyUsage the apiKeyUsage to set
+	 * @param apiKeyUsage
+	 *            the apiKeyUsage to set
 	 */
 	public void setApiKeyUsage(List<ApiKeyUsage> apiKeyUsage) {
 		this.apiKeyUsage = apiKeyUsage;
