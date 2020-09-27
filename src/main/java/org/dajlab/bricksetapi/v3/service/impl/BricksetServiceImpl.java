@@ -24,12 +24,14 @@ import org.dajlab.bricksetapi.v3.vo.BricksetException;
 import org.dajlab.bricksetapi.v3.vo.GetMinifigCollectionParameters;
 import org.dajlab.bricksetapi.v3.vo.Instruction;
 import org.dajlab.bricksetapi.v3.vo.MinifigCollection;
+import org.dajlab.bricksetapi.v3.vo.Reviews;
 import org.dajlab.bricksetapi.v3.vo.Set;
 import org.dajlab.bricksetapi.v3.vo.SetCollectionParameters;
 import org.dajlab.bricksetapi.v3.vo.SetMinifigCollectionParameters;
 import org.dajlab.bricksetapi.v3.vo.SetParameters;
 import org.dajlab.bricksetapi.v3.vo.Subtheme;
 import org.dajlab.bricksetapi.v3.vo.Theme;
+import org.dajlab.bricksetapi.v3.vo.UserMinifigNotes;
 import org.dajlab.bricksetapi.v3.vo.UserNotes;
 import org.dajlab.bricksetapi.v3.vo.Year;
 
@@ -60,7 +62,8 @@ public class BricksetServiceImpl implements IBricksetService {
 	/**
 	 * Constructor.
 	 * 
-	 * @param apiKey api key
+	 * @param apiKey
+	 *            api key
 	 */
 	public BricksetServiceImpl(String apiKey) {
 		generalService = new GeneralServiceImpl(apiKey);
@@ -145,6 +148,15 @@ public class BricksetServiceImpl implements IBricksetService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public List<Reviews> getReviews(int setId) throws BricksetException {
+
+		return setsService.getReviews(setId);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public List<Theme> getThemes() throws BricksetException {
 
 		return setsService.getThemes();
@@ -184,6 +196,15 @@ public class BricksetServiceImpl implements IBricksetService {
 	public List<UserNotes> getUserNotes(String userHash) throws BricksetException {
 
 		return setCollectionService.getUserNotes(userHash);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<UserMinifigNotes> getUserMinifigNotes(String userHash) throws BricksetException {
+
+		return setCollectionService.getUserMinifigNotes(userHash);
 	}
 
 	/**

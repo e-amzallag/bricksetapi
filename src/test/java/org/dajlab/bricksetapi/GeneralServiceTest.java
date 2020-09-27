@@ -23,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import org.dajlab.bricksetapi.v3.service.impl.BricksetServiceImpl;
 import org.dajlab.bricksetapi.v3.service.impl.GeneralServiceImpl;
 import org.dajlab.bricksetapi.v3.vo.ApiKeyUsage;
 import org.dajlab.bricksetapi.v3.vo.BricksetException;
@@ -32,7 +33,7 @@ import org.junit.jupiter.api.Test;
 
 public class GeneralServiceTest {
 
-	private static GeneralServiceImpl generalService;
+	private static BricksetServiceImpl bricksetService;
 
 	private static String login;
 
@@ -46,7 +47,7 @@ public class GeneralServiceTest {
 	public static void before() {
 		ResourceBundle rb = ResourceBundle.getBundle("parameters");
 		String apikey = rb.getString("apikey");
-		generalService = new GeneralServiceImpl(apikey);
+		bricksetService = new BricksetServiceImpl(apikey);
 		login = rb.getString("login");
 		pwd = rb.getString("password");
 		userhash = rb.getString("userhash");
@@ -56,7 +57,7 @@ public class GeneralServiceTest {
 	public void testCheckKey() {
 
 		try {
-			boolean response = generalService.checkKey();
+			boolean response = bricksetService.checkKey();
 			assertTrue(response, "Check key failed");
 		} catch (BricksetException e) {
 			fail(e.getMessage());
@@ -80,7 +81,7 @@ public class GeneralServiceTest {
 	public void testLogin() {
 
 		try {
-			String response = generalService.login(login, pwd);
+			String response = bricksetService.login(login, pwd);
 			System.out.println("User hash = " + response);
 			assertEquals(userhash, response);
 		} catch (BricksetException e) {
@@ -92,7 +93,7 @@ public class GeneralServiceTest {
 	public void testLoginFail() {
 
 		try {
-			generalService.login(login, "azerty");
+			bricksetService.login(login, "azerty");
 			fail("Expected exception not throwned");
 		} catch (BricksetException e) {
 			assertEquals(MessageEnum.INVALID_USERNAME_OR_PASSWORD, e.getCodeMessage(), "Correct exception");
@@ -102,7 +103,7 @@ public class GeneralServiceTest {
 	@Test
 	public void testCheckUserHash() {
 		try {
-			boolean response = generalService.checkUserHash(userhash);
+			boolean response = bricksetService.checkUserHash(userhash);
 			assertTrue(response, "Check user hash failed");
 		} catch (BricksetException e) {
 			fail(e.getMessage());
@@ -112,7 +113,7 @@ public class GeneralServiceTest {
 	@Test
 	public void testCheckUserHashFail() {
 		try {
-			generalService.checkUserHash("aaaa");
+			bricksetService.checkUserHash("aaaa");
 			fail("Expected exception not throwned");
 		} catch (BricksetException e) {
 			assertEquals(MessageEnum.INVALID_USER_HASH, e.getCodeMessage(), "Correct exception");
@@ -122,7 +123,7 @@ public class GeneralServiceTest {
 	@Test
 	public void testGetKeyUsageStats() {
 		try {
-			List<ApiKeyUsage> usages = generalService.getKeyUsageStats();
+			List<ApiKeyUsage> usages = bricksetService.getKeyUsageStats();
 			for (ApiKeyUsage usage : usages) {
 				System.out.println(usage.getCount() + " for " + YYYY_MM_DD_DASH.format(usage.getDateStamp().getTime()));
 			}

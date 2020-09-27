@@ -21,16 +21,17 @@ import static org.junit.jupiter.api.Assertions.fail;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import org.dajlab.bricksetapi.v3.service.impl.SetCollectionManagementServiceImpl;
+import org.dajlab.bricksetapi.v3.service.impl.BricksetServiceImpl;
 import org.dajlab.bricksetapi.v3.vo.BricksetException;
 import org.dajlab.bricksetapi.v3.vo.SetCollectionParameters;
+import org.dajlab.bricksetapi.v3.vo.UserMinifigNotes;
 import org.dajlab.bricksetapi.v3.vo.UserNotes;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 public class SetCollectionManagementServiceTest {
 
-	private static SetCollectionManagementServiceImpl setCollectionManagementService;
+	private static BricksetServiceImpl bricksetService;
 
 	private static String userhash;
 
@@ -38,7 +39,7 @@ public class SetCollectionManagementServiceTest {
 	public static void before() {
 		ResourceBundle rb = ResourceBundle.getBundle("parameters");
 		String apikey = rb.getString("apikey");
-		setCollectionManagementService = new SetCollectionManagementServiceImpl(apikey);
+		bricksetService = new BricksetServiceImpl(apikey);
 		userhash = rb.getString("userhash");
 	}
 
@@ -49,7 +50,7 @@ public class SetCollectionManagementServiceTest {
 			// Set 10271-1
 			SetCollectionParameters params = new SetCollectionParameters();
 			params.setOwn(true).setQuantityOwned(2).setNotes("X-Mas Gift");
-			setCollectionManagementService.setCollection(29962, params, userhash);
+			bricksetService.setCollection(29962, params, userhash);
 		} catch (BricksetException e) {
 			fail(e.getMessage());
 		}
@@ -58,10 +59,23 @@ public class SetCollectionManagementServiceTest {
 	@Test
 	public void getUserNotes() {
 		try {
-			List<UserNotes> usernotes = setCollectionManagementService.getUserNotes(userhash);
+			List<UserNotes> usernotes = bricksetService.getUserNotes(userhash);
 			assertNotNull(usernotes, "User notes null");
 			for (UserNotes userNote : usernotes) {
 				System.out.println(userNote.getSetId() + " - " + userNote.getNotes());
+			}
+		} catch (BricksetException e) {
+			fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void getUserMinifigNotes() {
+		try {
+			List<UserMinifigNotes> notes = bricksetService.getUserMinifigNotes(userhash);
+			assertNotNull(notes, "User minifigure notes null");
+			for (UserMinifigNotes note : notes) {
+				System.out.println(note.getMinifigNumber() + " - " + note.getNotes());
 			}
 		} catch (BricksetException e) {
 			fail(e.getMessage());

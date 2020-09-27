@@ -29,6 +29,10 @@ public class SetMinifigCollectionParameters {
 	private Boolean want;
 	@JsonProperty("qtyOwned")
 	private Integer quantityOwned;
+	/**
+	 * User notes, max 200 characters.
+	 */
+	private String notes;
 
 	/**
 	 * @return the own
@@ -40,7 +44,8 @@ public class SetMinifigCollectionParameters {
 	/**
 	 * If false then {@link #quantityOwned} is automatically set to 0
 	 * 
-	 * @param own the own to set
+	 * @param own
+	 *            the own to set
 	 * @return this
 	 */
 	public final SetMinifigCollectionParameters setOwn(Boolean own) {
@@ -56,7 +61,8 @@ public class SetMinifigCollectionParameters {
 	}
 
 	/**
-	 * @param want the want to set
+	 * @param want
+	 *            the want to set
 	 * @return this
 	 */
 	public final SetMinifigCollectionParameters setWant(Boolean want) {
@@ -74,12 +80,32 @@ public class SetMinifigCollectionParameters {
 	/**
 	 * 0-999. If greater than 0 then {@link #own} is automatically set to true
 	 * 
-	 * @param quantityOwned the quantityOwned to set
+	 * @param quantityOwned
+	 *            the quantityOwned to set
 	 * @return this
 	 */
 	public final SetMinifigCollectionParameters setQuantityOwned(Integer quantityOwned) {
 		this.quantityOwned = quantityOwned;
 		return this;
+	}
+
+	/**
+	 * @return the notes
+	 */
+	public String getNotes() {
+		return notes;
+	}
+
+	/**
+	 * User notes, max 200 characters.<br>
+	 * Note: due to the way this method works pass either
+	 * {@link #own}/{@link #want}/{@link #quantityOwned} OR {@link #notes}.
+	 * 
+	 * @param notes
+	 *            the notes to set
+	 */
+	public void setNotes(String notes) {
+		this.notes = notes;
 	}
 
 }

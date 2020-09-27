@@ -25,7 +25,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import org.dajlab.bricksetapi.v3.service.impl.SetsServiceImpl;
+import org.dajlab.bricksetapi.v3.service.impl.BricksetServiceImpl;
 import org.dajlab.bricksetapi.v3.vo.AdditionalImages;
 import org.dajlab.bricksetapi.v3.vo.AgeRange;
 import org.dajlab.bricksetapi.v3.vo.Barcodes;
@@ -50,7 +50,7 @@ import org.junit.jupiter.api.Test;
 
 public class SetsServiceTest {
 
-	private static SetsServiceImpl setsService;
+	private static BricksetServiceImpl bricksetService;
 
 	private static String userhash;
 
@@ -58,7 +58,7 @@ public class SetsServiceTest {
 	public static void before() {
 		ResourceBundle rb = ResourceBundle.getBundle("parameters");
 		String apikey = rb.getString("apikey");
-		setsService = new SetsServiceImpl(apikey);
+		bricksetService = new BricksetServiceImpl(apikey);
 		userhash = rb.getString("userhash");
 	}
 
@@ -68,7 +68,7 @@ public class SetsServiceTest {
 		try {
 			SetParameters params = new SetParameters();
 			params.addSetNumber("3009-1");
-			List<Set> sets = setsService.getSets(params, userhash);
+			List<Set> sets = bricksetService.getSets(params, userhash);
 			assertNotNull(sets, "List null");
 			assertEquals(0, sets.size(), "A result was found");
 		} catch (BricksetException e) {
@@ -82,7 +82,7 @@ public class SetsServiceTest {
 		try {
 			SetParameters params = new SetParameters();
 			params.addSetNumber("60132-1").withExtendedData();
-			List<Set> sets = setsService.getSets(params, userhash);
+			List<Set> sets = bricksetService.getSets(params, userhash);
 			assertTrue(!sets.isEmpty(), "No matches");
 			for (Set set : sets) {
 				System.out.println(set.getNumber() + "-" + set.getNumberVariant() + " - " + set.getYear());
@@ -156,7 +156,7 @@ public class SetsServiceTest {
 		try {
 			SetParameters params = new SetParameters();
 			params.addTheme("Architecture").addTheme("Classic").addYear("2020");
-			List<Set> sets = setsService.getSets(params);
+			List<Set> sets = bricksetService.getSets(params);
 			assertNotNull(sets, "No matches");
 			assertTrue(!sets.isEmpty(), "No matches");
 			assertTrue(sets.stream().anyMatch(set -> {
@@ -179,7 +179,7 @@ public class SetsServiceTest {
 		try {
 			SetParameters params = new SetParameters();
 			params.setQuery("666").setOrderBy(OrderByEnum.PiecesDESC);
-			List<Set> sets = setsService.getSets(params);
+			List<Set> sets = bricksetService.getSets(params);
 			assertNotNull(sets, "No matches");
 			assertTrue(!sets.isEmpty(), "No matches");
 			for (Set set : sets) {
@@ -199,7 +199,7 @@ public class SetsServiceTest {
 		try {
 			SetParameters params = new SetParameters();
 			params.addSetNumber("6080-1").addSetNumber("6081-1");
-			List<Set> sets = setsService.getSets(params);
+			List<Set> sets = bricksetService.getSets(params);
 			assertNotNull(sets, "No matches");
 			assertEquals(2, sets.size(), "No matches");
 			Set s6080 = sets.get(0);
@@ -218,7 +218,7 @@ public class SetsServiceTest {
 		try {
 			SetParameters params = new SetParameters();
 			params.setTag("Windmill");
-			List<Set> sets = setsService.getSets(params);
+			List<Set> sets = bricksetService.getSets(params);
 			assertNotNull(sets, "No matches");
 			assertTrue(sets.stream().anyMatch(set -> {
 				return "4999".equals(set.getNumber());
@@ -234,7 +234,7 @@ public class SetsServiceTest {
 
 		try {
 			// Set 10271-1
-			List<AdditionalImages> images = setsService.getAdditionalImages(29962);
+			List<AdditionalImages> images = bricksetService.getAdditionalImages(29962);
 			assertNotNull(images, "No matches");
 			assertTrue(!images.isEmpty(), "No matches");
 			for (AdditionalImages image : images) {
@@ -252,7 +252,7 @@ public class SetsServiceTest {
 	public void testGetInstructions() {
 
 		try {
-			List<Instruction> instructions = setsService.getInstructions(29962);
+			List<Instruction> instructions = bricksetService.getInstructions(29962);
 			assertNotNull(instructions, "No matches");
 			assertTrue(!instructions.isEmpty(), "No matches");
 			for (Instruction instruction : instructions) {
@@ -272,10 +272,10 @@ public class SetsServiceTest {
 		try {
 			SetParameters param = new SetParameters();
 			param.addSetNumber("7239-1");
-			List<Set> sets = setsService.getSets(param);
+			List<Set> sets = bricksetService.getSets(param);
 			Set set = sets.get(0);
 
-			List<Reviews> reviews = setsService.getReviews(set.getSetId());
+			List<Reviews> reviews = bricksetService.getReviews(set.getSetId());
 			assertNotNull(reviews, "No matches");
 			assertTrue(!reviews.isEmpty(), "No matches");
 			for (Reviews review : reviews) {
@@ -301,7 +301,7 @@ public class SetsServiceTest {
 	public void testGetThemes() {
 
 		try {
-			List<Theme> themes = setsService.getThemes();
+			List<Theme> themes = bricksetService.getThemes();
 			assertNotNull(themes, "No matches");
 			assertTrue(!themes.isEmpty(), "No matches");
 			for (Theme theme : themes) {
@@ -319,7 +319,7 @@ public class SetsServiceTest {
 	public void testGetSubthemes() {
 
 		try {
-			List<Subtheme> subthemes = setsService.getSubthemes("Mixels");
+			List<Subtheme> subthemes = bricksetService.getSubthemes("Mixels");
 			assertNotNull(subthemes, "No matches");
 			assertTrue(!subthemes.isEmpty(), "No matches");
 			for (Subtheme subtheme : subthemes) {
@@ -340,7 +340,7 @@ public class SetsServiceTest {
 	public void testGetYears() {
 
 		try {
-			List<Year> years = setsService.getYears("Mixels");
+			List<Year> years = bricksetService.getYears("Mixels");
 			assertNotNull(years, "No matches");
 			assertTrue(!years.isEmpty(), "No matches");
 			for (Year year : years) {

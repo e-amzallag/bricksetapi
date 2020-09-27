@@ -46,6 +46,8 @@ public class Response {
 
 	private List<UserNotes> userNotes;
 
+	private List<UserMinifigNotes> userMinifigNotes;
+
 	private List<MinifigCollection> minifigs;
 
 	private List<ApiKeyUsage> apiKeyUsage;
@@ -228,6 +230,21 @@ public class Response {
 	 */
 	public final void setUserNotes(List<UserNotes> userNotes) {
 		this.userNotes = userNotes;
+	}
+
+	/**
+	 * @return the userMinifigureNotes
+	 */
+	public List<UserMinifigNotes> getUserMinifigNotes() {
+		return userMinifigNotes;
+	}
+
+	/**
+	 * @param userMinifigureNotes
+	 *            the userMinifigureNotes to set
+	 */
+	public void setUserMinifigNotes(List<UserMinifigNotes> userMinifigureNotes) {
+		this.userMinifigNotes = userMinifigureNotes;
 	}
 
 	/**

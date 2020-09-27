@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import org.dajlab.bricksetapi.v3.service.impl.MinifigCollectionManagementServiceImpl;
+import org.dajlab.bricksetapi.v3.service.impl.BricksetServiceImpl;
 import org.dajlab.bricksetapi.v3.vo.BricksetException;
 import org.dajlab.bricksetapi.v3.vo.GetMinifigCollectionParameters;
 import org.dajlab.bricksetapi.v3.vo.MinifigCollection;
@@ -31,7 +31,7 @@ import org.junit.jupiter.api.Test;
 
 public class MinifigCollectionManagementServiceTest {
 
-	private static MinifigCollectionManagementServiceImpl minifigCollectionManagementService;
+	private static BricksetServiceImpl bricksetService;
 
 	private static String userhash;
 
@@ -39,7 +39,7 @@ public class MinifigCollectionManagementServiceTest {
 	public static void before() {
 		ResourceBundle rb = ResourceBundle.getBundle("parameters");
 		String apikey = rb.getString("apikey");
-		minifigCollectionManagementService = new MinifigCollectionManagementServiceImpl(apikey);
+		bricksetService = new BricksetServiceImpl(apikey);
 		userhash = rb.getString("userhash");
 	}
 
@@ -48,8 +48,7 @@ public class MinifigCollectionManagementServiceTest {
 		try {
 			GetMinifigCollectionParameters params = new GetMinifigCollectionParameters();
 			params.setQuery("Captain");
-			List<MinifigCollection> minifigs = minifigCollectionManagementService.getMinifigCollection(params,
-					userhash);
+			List<MinifigCollection> minifigs = bricksetService.getMinifigCollection(params, userhash);
 			assertNotNull(minifigs, "Minifig collection null");
 			for (MinifigCollection minifig : minifigs) {
 				System.out.println(minifig.getMinifigNumber() + " - " + " - " + minifig.getName() + " - "
@@ -66,7 +65,19 @@ public class MinifigCollectionManagementServiceTest {
 			SetMinifigCollectionParameters params = new SetMinifigCollectionParameters();
 			// params.setOwn(true).setQuantityOwned(2);
 			params.setOwn(false);
-			minifigCollectionManagementService.setMinifigCollection("st007", params, userhash);
+			bricksetService.setMinifigCollection("st007", params, userhash);
+
+		} catch (BricksetException e) {
+			fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testSetMinifigCollectionNote() {
+		try {
+			SetMinifigCollectionParameters params = new SetMinifigCollectionParameters();
+			params.setNotes("Roger bis");
+			bricksetService.setMinifigCollection("sw0756", params, userhash);
 
 		} catch (BricksetException e) {
 			fail(e.getMessage());

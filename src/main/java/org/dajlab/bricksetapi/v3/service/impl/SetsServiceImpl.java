@@ -217,9 +217,6 @@ public class SetsServiceImpl extends AbstractBricksetService {
 	 * @return a list of reviews
 	 * @throws BricksetException
 	 *             if status is not success
-	 * @return a list of reviews
-	 * @throws BricksetException
-	 *             if status is not success
 	 */
 	public List<Reviews> getReviews(int setId) throws BricksetException {
 
