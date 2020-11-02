@@ -30,7 +30,7 @@ public class SetCollectionParameters {
 	@JsonProperty("qtyOwned")
 	private Integer quantityOwned;
 	/**
-	 * User notes, max 200 characters.
+	 * User notes, max 1000 characters.
 	 */
 	private String notes;
 	/**
@@ -98,7 +98,7 @@ public class SetCollectionParameters {
 	}
 
 	/**
-	 * User notes, max 200 characters
+	 * User notes, max 1000 characters
 	 * 
 	 * @param notes the notes to set
 	 * @return this

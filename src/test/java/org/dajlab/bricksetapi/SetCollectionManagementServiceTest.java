@@ -24,7 +24,6 @@ import java.util.ResourceBundle;
 import org.dajlab.bricksetapi.v3.service.impl.BricksetServiceImpl;
 import org.dajlab.bricksetapi.v3.vo.BricksetException;
 import org.dajlab.bricksetapi.v3.vo.SetCollectionParameters;
-import org.dajlab.bricksetapi.v3.vo.UserMinifigNotes;
 import org.dajlab.bricksetapi.v3.vo.UserNotes;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -63,19 +62,6 @@ public class SetCollectionManagementServiceTest {
 			assertNotNull(usernotes, "User notes null");
 			for (UserNotes userNote : usernotes) {
 				System.out.println(userNote.getSetId() + " - " + userNote.getNotes());
-			}
-		} catch (BricksetException e) {
-			fail(e.getMessage());
-		}
-	}
-
-	@Test
-	public void getUserMinifigNotes() {
-		try {
-			List<UserMinifigNotes> notes = bricksetService.getUserMinifigNotes(userhash);
-			assertNotNull(notes, "User minifigure notes null");
-			for (UserMinifigNotes note : notes) {
-				System.out.println(note.getMinifigNumber() + " - " + note.getNotes());
 			}
 		} catch (BricksetException e) {
 			fail(e.getMessage());

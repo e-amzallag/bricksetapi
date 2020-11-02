@@ -28,6 +28,7 @@ import org.dajlab.bricksetapi.v3.vo.Method;
 import org.dajlab.bricksetapi.v3.vo.MinifigCollection;
 import org.dajlab.bricksetapi.v3.vo.Response;
 import org.dajlab.bricksetapi.v3.vo.SetMinifigCollectionParameters;
+import org.dajlab.bricksetapi.v3.vo.UserMinifigNotes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -49,6 +50,11 @@ public class MinifigCollectionManagementServiceImpl extends AbstractBricksetServ
 	 * Set minifig collection uri method.
 	 */
 	private static final String SET_MINIFIG_COLLECTION = "/setMinifigCollection";
+
+	/**
+	 * Get minifigure user notes uri method.
+	 */
+	private static final String GET_USER_MINIFIG_NOTES = "/getUserMinifigNotes";
 
 	/**
 	 * Constructor.
@@ -131,5 +137,34 @@ public class MinifigCollectionManagementServiceImpl extends AbstractBricksetServ
 				throw new BricksetException(MessageEnum.TECHNICAL_ERROR, e.getMessage());
 			}
 		}
+	}
+
+	/**
+	 * Get all of a user's minifigure notes.
+	 * 
+	 * @param userHash userhash
+	 * @return a list of all user's notes
+	 * @throws BricksetException if status is not success
+	 */
+	public List<UserMinifigNotes> getUserMinifigNotes(String userHash) throws BricksetException {
+		String uri = GET_USER_MINIFIG_NOTES;
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			String output = returnJsonResponse(Method.GET, uri, null, userHash);
+
+			if (output != null) {
+				Response response = mapper.readValue(output, Response.class);
+				switch (response.getStatus()) {
+				case SUCCESS:
+					return response.getUserMinifigNotes();
+				case ERROR:
+				default:
+					throw new BricksetException(response.getMessage());
+				}
+			}
+		} catch (JsonProcessingException e) {
+			throw new BricksetException(MessageEnum.TECHNICAL_ERROR, e.getMessage());
+		}
+		return new ArrayList<>();
 	}
 }

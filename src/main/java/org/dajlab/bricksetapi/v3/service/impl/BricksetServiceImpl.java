@@ -62,8 +62,7 @@ public class BricksetServiceImpl implements IBricksetService {
 	/**
 	 * Constructor.
 	 * 
-	 * @param apiKey
-	 *            api key
+	 * @param apiKey api key
 	 */
 	public BricksetServiceImpl(String apiKey) {
 		generalService = new GeneralServiceImpl(apiKey);
@@ -204,7 +203,7 @@ public class BricksetServiceImpl implements IBricksetService {
 	@Override
 	public List<UserMinifigNotes> getUserMinifigNotes(String userHash) throws BricksetException {
 
-		return setCollectionService.getUserMinifigNotes(userHash);
+		return minifigCollectionService.getUserMinifigNotes(userHash);
 	}
 
 	/**

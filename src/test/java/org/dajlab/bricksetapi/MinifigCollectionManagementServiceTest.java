@@ -26,6 +26,7 @@ import org.dajlab.bricksetapi.v3.vo.BricksetException;
 import org.dajlab.bricksetapi.v3.vo.GetMinifigCollectionParameters;
 import org.dajlab.bricksetapi.v3.vo.MinifigCollection;
 import org.dajlab.bricksetapi.v3.vo.SetMinifigCollectionParameters;
+import org.dajlab.bricksetapi.v3.vo.UserMinifigNotes;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -41,6 +42,18 @@ public class MinifigCollectionManagementServiceTest {
 		String apikey = rb.getString("apikey");
 		bricksetService = new BricksetServiceImpl(apikey);
 		userhash = rb.getString("userhash");
+	}
+
+	@Test
+	public void testSetMinifigCollectionNote() {
+		try {
+			SetMinifigCollectionParameters params = new SetMinifigCollectionParameters();
+			params.setNotes("Roger bis");
+			bricksetService.setMinifigCollection("sw0756", params, userhash);
+
+		} catch (BricksetException e) {
+			fail(e.getMessage());
+		}
 	}
 
 	@Test
@@ -63,8 +76,8 @@ public class MinifigCollectionManagementServiceTest {
 	public void testSetMinifigCollection() {
 		try {
 			SetMinifigCollectionParameters params = new SetMinifigCollectionParameters();
-			// params.setOwn(true).setQuantityOwned(2);
-			params.setOwn(false);
+			params.setOwn(true).setQuantityOwned(2);
+			// params.setOwn(false);
 			bricksetService.setMinifigCollection("st007", params, userhash);
 
 		} catch (BricksetException e) {
@@ -73,15 +86,15 @@ public class MinifigCollectionManagementServiceTest {
 	}
 
 	@Test
-	public void testSetMinifigCollectionNote() {
+	public void getUserMinifigNotes() {
 		try {
-			SetMinifigCollectionParameters params = new SetMinifigCollectionParameters();
-			params.setNotes("Roger bis");
-			bricksetService.setMinifigCollection("sw0756", params, userhash);
-
+			List<UserMinifigNotes> notes = bricksetService.getUserMinifigNotes(userhash);
+			assertNotNull(notes, "User minifigure notes null");
+			for (UserMinifigNotes note : notes) {
+				System.out.println(note.getMinifigNumber() + " - " + note.getNotes());
+			}
 		} catch (BricksetException e) {
 			fail(e.getMessage());
 		}
 	}
-
 }

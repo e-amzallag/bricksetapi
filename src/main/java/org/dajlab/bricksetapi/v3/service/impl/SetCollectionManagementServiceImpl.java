@@ -26,7 +26,6 @@ import org.dajlab.bricksetapi.v3.vo.MessageEnum;
 import org.dajlab.bricksetapi.v3.vo.Method;
 import org.dajlab.bricksetapi.v3.vo.Response;
 import org.dajlab.bricksetapi.v3.vo.SetCollectionParameters;
-import org.dajlab.bricksetapi.v3.vo.UserMinifigNotes;
 import org.dajlab.bricksetapi.v3.vo.UserNotes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -50,15 +49,9 @@ public class SetCollectionManagementServiceImpl extends AbstractBricksetService 
 	private static final String GET_USER_NOTES = "/getUserNotes";
 
 	/**
-	 * Get minifigure user notes uri method.
-	 */
-	private static final String GET_USER_MINIFIG_NOTES = "/getUserMinifigNotes";
-
-	/**
 	 * Constructor.
 	 * 
-	 * @param apiKey
-	 *            api key
+	 * @param apiKey api key
 	 */
 	public SetCollectionManagementServiceImpl(String apiKey) {
 		super(apiKey);
@@ -67,14 +60,10 @@ public class SetCollectionManagementServiceImpl extends AbstractBricksetService 
 	/**
 	 * Set a user's collection details.
 	 * 
-	 * @param setId
-	 *            Set ID
-	 * @param params
-	 *            parameters and options
-	 * @param userHash
-	 *            userhash
-	 * @throws BricksetException
-	 *             if status is not success
+	 * @param setId    Set ID
+	 * @param params   parameters and options
+	 * @param userHash userhash
+	 * @throws BricksetException if status is not success
 	 */
 	public void setCollection(int setId, SetCollectionParameters params, String userHash) throws BricksetException {
 		if (params != null) {
@@ -106,11 +95,9 @@ public class SetCollectionManagementServiceImpl extends AbstractBricksetService 
 	/**
 	 * Get all of a user's set notes.
 	 * 
-	 * @param userHash
-	 *            userhash
+	 * @param userHash userhash
 	 * @return a list of all user's notes
-	 * @throws BricksetException
-	 *             if status is not success
+	 * @throws BricksetException if status is not success
 	 */
 	public List<UserNotes> getUserNotes(String userHash) throws BricksetException {
 		String uri = GET_USER_NOTES;
@@ -134,34 +121,4 @@ public class SetCollectionManagementServiceImpl extends AbstractBricksetService 
 		return new ArrayList<>();
 	}
 
-	/**
-	 * Get all of a user's minifigure notes.
-	 * 
-	 * @param userHash
-	 *            userhash
-	 * @return a list of all user's notes
-	 * @throws BricksetException
-	 *             if status is not success
-	 */
-	public List<UserMinifigNotes> getUserMinifigNotes(String userHash) throws BricksetException {
-		String uri = GET_USER_MINIFIG_NOTES;
-		ObjectMapper mapper = new ObjectMapper();
-		try {
-			String output = returnJsonResponse(Method.GET, uri, null, userHash);
-
-			if (output != null) {
-				Response response = mapper.readValue(output, Response.class);
-				switch (response.getStatus()) {
-				case SUCCESS:
-					return response.getUserMinifigNotes();
-				case ERROR:
-				default:
-					throw new BricksetException(response.getMessage());
-				}
-			}
-		} catch (JsonProcessingException e) {
-			throw new BricksetException(MessageEnum.TECHNICAL_ERROR, e.getMessage());
-		}
-		return new ArrayList<>();
-	}
 }
