@@ -6,7 +6,7 @@ Java API for Brickset webservices API v3.
 
 See https://brickset.com/article/52666/brickset-web-services for more information about the official Brickset API
 
-Support all methods (version 1.03, 02 Oct 2020):
+Support all methods (version 1.04, 04 Feb 2021):
 * General
 * Sets
 * Set collection management

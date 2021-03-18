@@ -267,6 +267,24 @@ public class SetsServiceTest {
 	}
 
 	@Test
+	public void testGetInstructions2() {
+
+		try {
+			List<Instruction> instructions = bricksetService.getInstructions2("21301-1");
+			assertNotNull(instructions, "No matches");
+			assertTrue(!instructions.isEmpty(), "No matches");
+			for (Instruction instruction : instructions) {
+				System.out.println(instruction.getDescription() + " - " + instruction.getUrl());
+				assertNotNull(instruction.getDescription(), "No description");
+				assertNotNull(instruction.getUrl(), "No url");
+			}
+
+		} catch (BricksetException e) {
+			fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void testGetReviews() {
 
 		try {

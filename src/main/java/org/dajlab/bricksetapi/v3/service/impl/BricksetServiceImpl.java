@@ -147,6 +147,15 @@ public class BricksetServiceImpl implements IBricksetService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public List<Instruction> getInstructions2(String setNumber) throws BricksetException {
+
+		return setsService.getInstructions2(setNumber);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public List<Reviews> getReviews(int setId) throws BricksetException {
 
 		return setsService.getReviews(setId);

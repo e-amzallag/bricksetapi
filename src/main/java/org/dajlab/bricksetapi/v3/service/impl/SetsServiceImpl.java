@@ -60,6 +60,11 @@ public class SetsServiceImpl extends AbstractBricksetService {
 	private static final String GET_INSTRUCTIONS = "/getInstructions";
 
 	/**
+	 * Get instructions uri method.
+	 */
+	private static final String GET_INSTRUCTIONS2 = "/getInstructions2";
+
+	/**
 	 * Get user reviews for the specified set.
 	 */
 	private static final String GET_REVIEWS = "/getReviews";
@@ -82,8 +87,7 @@ public class SetsServiceImpl extends AbstractBricksetService {
 	/**
 	 * Constructor.
 	 * 
-	 * @param apiKey
-	 *            api key
+	 * @param apiKey api key
 	 */
 	public SetsServiceImpl(String apiKey) {
 		super(apiKey);
@@ -92,11 +96,9 @@ public class SetsServiceImpl extends AbstractBricksetService {
 	/**
 	 * Retrieve a list of sets, or more information about a particular one.
 	 * 
-	 * @param params
-	 *            query paratemers
+	 * @param params query paratemers
 	 * @return a list of sets
-	 * @throws BricksetException
-	 *             if status is not success
+	 * @throws BricksetException if status is not success
 	 */
 	public List<Set> getSets(SetParameters params) throws BricksetException {
 		return getSets(params, null);
@@ -105,13 +107,10 @@ public class SetsServiceImpl extends AbstractBricksetService {
 	/**
 	 * Retrieve a list of sets, or more information about a particular one.
 	 * 
-	 * @param params
-	 *            query paratemers
-	 * @param userHash
-	 *            userhash
+	 * @param params   query paratemers
+	 * @param userHash userhash
 	 * @return a list of sets
-	 * @throws BricksetException
-	 *             if status is not success
+	 * @throws BricksetException if status is not success
 	 */
 	public List<Set> getSets(SetParameters params, String userHash) throws BricksetException {
 
@@ -144,11 +143,9 @@ public class SetsServiceImpl extends AbstractBricksetService {
 	/**
 	 * Get a list of URLs of additional set images for the specified set.
 	 * 
-	 * @param setId
-	 *            the set id.
+	 * @param setId the set id.
 	 * @return a list of additional images
-	 * @throws BricksetException
-	 *             if status is not success
+	 * @throws BricksetException if status is not success
 	 */
 	public List<AdditionalImages> getAdditionalImages(int setId) throws BricksetException {
 
@@ -178,11 +175,9 @@ public class SetsServiceImpl extends AbstractBricksetService {
 	/**
 	 * Get a list of instructions for the specified set.
 	 * 
-	 * @param setId
-	 *            a set id.
+	 * @param setId a set id.
 	 * @return a list of instructions
-	 * @throws BricksetException
-	 *             if status is not success
+	 * @throws BricksetException if status is not success
 	 */
 	public List<Instruction> getInstructions(int setId) throws BricksetException {
 
@@ -210,13 +205,44 @@ public class SetsServiceImpl extends AbstractBricksetService {
 	}
 
 	/**
+	 * Get a list of instructions for the specified set without the need to look up
+	 * the set ID first.
+	 * 
+	 * @param setNumber Set number
+	 * @return a list of instructions
+	 * @throws BricksetException if status is not success
+	 */
+	List<Instruction> getInstructions2(String setNumber) throws BricksetException {
+
+		String uri = GET_INSTRUCTIONS2;
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String, String> parameters = new HashMap<>();
+		try {
+			parameters.put("setNumber", setNumber);
+			String output = returnJsonResponse(Method.GET, uri, parameters, null);
+
+			if (output != null) {
+				Response response = mapper.readValue(output, Response.class);
+				switch (response.getStatus()) {
+				case SUCCESS:
+					return response.getInstructions();
+				case ERROR:
+				default:
+					throw new BricksetException(response.getMessage());
+				}
+			}
+		} catch (JsonProcessingException e) {
+			throw new BricksetException(MessageEnum.TECHNICAL_ERROR, e.getMessage());
+		}
+		return new ArrayList<>(0);
+	}
+
+	/**
 	 * Get user reviews for the specified set.
 	 * 
-	 * @param setId
-	 *            a set id.
+	 * @param setId a set id.
 	 * @return a list of reviews
-	 * @throws BricksetException
-	 *             if status is not success
+	 * @throws BricksetException if status is not success
 	 */
 	public List<Reviews> getReviews(int setId) throws BricksetException {
 
@@ -247,8 +273,7 @@ public class SetsServiceImpl extends AbstractBricksetService {
 	 * Get a list of themes, with the total number of sets in each.
 	 * 
 	 * @return the list of the themes
-	 * @throws BricksetException
-	 *             if status is not success
+	 * @throws BricksetException if status is not success
 	 */
 	public List<Theme> getThemes() throws BricksetException {
 
@@ -277,11 +302,9 @@ public class SetsServiceImpl extends AbstractBricksetService {
 	 * Get a list of subthemes for a given theme, with the total number of sets in
 	 * each.
 	 * 
-	 * @param theme
-	 *            a theme
+	 * @param theme a theme
 	 * @return a list of subthemes
-	 * @throws BricksetException
-	 *             if status is not success
+	 * @throws BricksetException if status is not success
 	 */
 	public List<Subtheme> getSubthemes(String theme) throws BricksetException {
 
@@ -311,11 +334,9 @@ public class SetsServiceImpl extends AbstractBricksetService {
 	/**
 	 * Get a list of years for a given theme, with the total number of sets in each.
 	 * 
-	 * @param theme
-	 *            Theme. An empty string get totals for all sets.
+	 * @param theme Theme. An empty string get totals for all sets.
 	 * @return a list of years
-	 * @throws BricksetException
-	 *             if status is not success
+	 * @throws BricksetException if status is not success
 	 */
 	public List<Year> getYears(String theme) throws BricksetException {
 
