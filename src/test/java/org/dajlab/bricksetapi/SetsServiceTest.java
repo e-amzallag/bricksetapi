@@ -98,7 +98,7 @@ public class SetsServiceTest {
 				assertEquals("City", set.getTheme());
 				assertEquals("Modern day", set.getThemeGroup());
 				assertEquals(13, set.getAdditionalImageCount().intValue());
-				assertEquals(7, set.getInstructionsCount().intValue());
+				assertEquals(4, set.getInstructionsCount().intValue());
 				assertNotNull(set.getLastUpdated());
 				assertEquals(4, set.getMinifigs().intValue());
 				assertEquals(515, set.getPieces().intValue());
